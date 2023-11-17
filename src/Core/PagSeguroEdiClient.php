@@ -84,9 +84,7 @@ class PagSeguroEdiClient extends Client
         return new Paginator(function (int $page, int $size, callable $limiter) use ($date) {
             $response = $this->getTransactionalMovementsPage($date, $page, $size);
             $pagination = Pagination::parse($response->getParsedPath('pagination'));
-            dump($pagination->jsonSerialize());
             $limiter($pagination->getTotalPages());
-
             return array_map(fn ($x) => TransactionalMovement::parse($x), $response->getParsedPath('detalhes'));
         }, 1, $pageSize);
     }
