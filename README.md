@@ -1,0 +1,1 @@
+# PagSeguro EDI via API

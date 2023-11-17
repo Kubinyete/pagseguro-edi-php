@@ -1,0 +1,33 @@
+{
+    "name": "kubinyete/pagseguro-edi",
+    "description": "Quickstart webservice client for extracting EDI data from PagSeguro API",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Kubinyete\\Edi\\PagSeguro\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vitor Kubinyete",
+            "email": "vitorkubinyete@hotmail.com"
+        }
+    ],
+    "autoload-dev": {
+        "psr-4": {
+            "Kubinyete\\Edi\\PagSeguro\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": ">=6.0",
+        "kubinyete/assertation": "^1.0",
+        "psr/log": "^1.1",
+        "symfony/polyfill-php81": "^1.28",
+        "symfony/polyfill-php80": "^1.28"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.4",
+        "fakerphp/faker": "^1.23",
+        "phpunit/phpunit": "^9.6"
+    }
+}
