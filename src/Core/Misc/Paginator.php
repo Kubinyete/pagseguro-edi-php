@@ -6,8 +6,23 @@ use Closure;
 use Traversable;
 use IteratorAggregate;
 
+/**
+ * An anonymous paginator object for interactive pagination using an iterator interface
+ * Requires a custom fetcher function to fetch the next page of items
+ *
+ * @template T
+ */
 class Paginator implements IteratorAggregate
 {
+    /**
+     * Creates a new paginator
+     *
+     * @param Closure<iterable<T>> $fetcher
+     * @param integer $page
+     * @param integer $perPage
+     * @param integer $totalPages
+     * @param iterable|null $items
+     */
     public function __construct(
         private Closure $fetcher,
         private int $page = 1,
@@ -82,6 +97,11 @@ class Paginator implements IteratorAggregate
         return !is_null($this->items);
     }
 
+    /**
+     * Fetches the current page of items from the fetcher function
+     *
+     * @return iterable<T>
+     */
     protected function loadPage(): iterable
     {
         return $this->items = $this->fetcher->__invoke(
@@ -96,6 +116,11 @@ class Paginator implements IteratorAggregate
         $this->items = null;
     }
 
+    /**
+     * Get the current page of items already loaded or fetches them from the fetcher function
+     *
+     * @return iterable<T>
+     */
     public function getItems(): iterable
     {
         if ($this->isPageLoaded()) {
@@ -105,6 +130,11 @@ class Paginator implements IteratorAggregate
         return $this->loadPage();
     }
 
+    /**
+     * Fetches the next page of items from the fetcher function or returns null if there are no more pages left
+     *
+     * @return iterable<T>|null
+     */
     public function nextItems(): ?iterable
     {
         if (!$this->isPageLoaded()) {
@@ -119,6 +149,11 @@ class Paginator implements IteratorAggregate
         }
     }
 
+    /**
+     * Gets the iterator for all available pages
+     *
+     * @return Traversable<T>
+     */
     public function getIterator(): Traversable
     {
         $this->setPage(1);
