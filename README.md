@@ -94,7 +94,7 @@ foreach ($paginator as $item) {
 ## Supported movement types
 ### Transactional
 
-| Attribute name | Method | Type
+| Attribute name | Type | Method
 | --- | --- | ---
 | movimento_api_codigo | string | `TransactionalMovement::getMovimentoApiCodigo`
 | tipo_registro | string | `TransactionalMovement::getTipoRegistro`
@@ -140,7 +140,7 @@ foreach ($paginator as $item) {
 
 ### Finantial
 
-| Attribute name | Method | Type
+| Attribute name | Type | Method
 | --- | --- | ---
 | movimento_api_codigo | string | `FinantialMovement::getMovimentoApiCodigo`
 | tipo_registro | string | `FinantialMovement::getTipoRegistro`
