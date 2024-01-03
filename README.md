@@ -1,4 +1,4 @@
-# <img align="middle" src="https://assets.pagseguro.com.br/ps-bootstrap/v7.3.1/svg/pagbank/logo-pagbank.svg" width="128"> **EDI** for PHP
+# <img align="top" src="https://assets.pagseguro.com.br/ps-bootstrap/v7.3.1/svg/pagbank/logo-pagbank.svg" width="165"> **EDI** for PHP
 
 **pt-BR**: Uma biblioteca simples e direta para carregar sequencialmente dados do EDI da adquirente [PagSeguro](https://pagseguro.uol.com.br/)
 
