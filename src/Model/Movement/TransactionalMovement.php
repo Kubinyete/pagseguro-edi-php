@@ -41,7 +41,7 @@ class TransactionalMovement extends Model
         $schema->string("instituicao_financeira"); //: "BOLETO",
         $schema->string("canal_entrada"); //: "W",
         $schema->string("leitor"); //: "",
-        $schema->string("meio_captura"); //: "3",
+        $schema->string("meio_captura")->nullable(); //: "3",
         $schema->string("num_logico"); //: "",
         $schema->string("nsu"); //: "",
         $schema->string("cartao_bin"); //: "      ",
