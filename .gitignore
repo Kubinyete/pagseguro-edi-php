@@ -3,3 +3,4 @@ phpunit.xml
 phpunit.personal.xml
 .phpunit.cache
 test.php
+composer.lock
