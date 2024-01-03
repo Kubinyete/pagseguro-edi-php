@@ -1,7 +1,7 @@
 {
     "name": "kubinyete/pagseguro-edi",
     "description": "Quickstart webservice client for extracting EDI data from PagSeguro API",
-    "type": "project",
+    "type": "library",
     "autoload": {
         "psr-4": {
             "Kubinyete\\Edi\\PagSeguro\\": "src/"
