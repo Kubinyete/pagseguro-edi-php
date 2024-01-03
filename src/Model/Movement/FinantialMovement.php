@@ -2,6 +2,7 @@
 
 namespace Kubinyete\Edi\PagSeguro\Model\Movement;
 
+use DateTimeInterface;
 use Kubinyete\Edi\PagSeguro\Model\Model;
 use Kubinyete\Edi\PagSeguro\Model\Schema\SchemaBuilder;
 
@@ -26,6 +27,7 @@ class FinantialMovement extends Model
         $schema->string("plano"); //: "1 ",
         $schema->string("parcela"); //: "1",
         $schema->string("quantidade_parcela"); //: "0",
+        $schema->string("data_movimentacao"); //: "2023-11-15",
         $schema->float("taxa_parcela_comprador")->nullable(); //: null,
         $schema->float("tarifa_boleto_compra")->nullable(); //: null,
         $schema->float("valor_original_transacao")->nullable(); //: 663.66,
@@ -258,6 +260,11 @@ class FinantialMovement extends Model
     }
 
     //
+
+    public function getDataMovimentacao(): string
+    {
+        return $this->get('data_movimentacao');
+    }
 
     public function getTaxaAntecipacao(): float
     {

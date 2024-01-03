@@ -113,7 +113,7 @@ foreach ($paginator as $item) {
 | plano | string | `TransactionalMovement::getPlano`
 | parcela | string | `TransactionalMovement::getParcela`
 | quantidade_parcela | string | `TransactionalMovement::getQuantidadeParcela`
-| data_prevista_pagamento | date | `TransactionalMovement::getDataPrevistaPagamento`
+| data_prevista_pagamento | string | `TransactionalMovement::getDataPrevistaPagamento`
 | taxa_parcela_comprador | float | `TransactionalMovement::getTaxaParcelaComprador`
 | tarifa_boleto_compra | float | `TransactionalMovement::getTarifaBoletoCompra`
 | valor_original_transacao | float | `TransactionalMovement::getValorOriginalTransacao`
