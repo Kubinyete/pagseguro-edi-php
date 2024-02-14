@@ -191,4 +191,32 @@ foreach ($paginator as $item) {
 
 ### Anticipation
 
-Not implemented yet, to be done.
+| Attribute name | Type | Method |
+| -------------- | ---- | ------ |
+| tipo_registro | string | `AnticipationMovement::getTipoRegistro`
+| estabelecimento | string | `AnticipationMovement::getEstabelecimento`
+| data_inicial_transacao | string | `AnticipationMovement::getDataInicialTransacao`
+| hora_inicial_transacao | string | `AnticipationMovement::getHoraInicialTransacao`
+| data_venda_ajuste | string | `AnticipationMovement::getDataVendaAjuste`
+| hora_venda_ajuste | string | `AnticipationMovement::getHoraVendaAjuste`
+| tipo_evento | string | `AnticipationMovement::getTipoEvento`
+| tipo_transacao | string | `AnticipationMovement::getTipoTransacao`
+| codigo_transacao | string | `AnticipationMovement::getCodigoTransacao`
+| codigo_venda | string | `AnticipationMovement::getCodigoVenda`
+| valor_total_transacao | float | `AnticipationMovement::getValorTotalTransacao`
+| valor_parcela | float | `AnticipationMovement::getValorParcela`
+| plano | string | `AnticipationMovement::getPlano`
+| parcela | string | `AnticipationMovement::getParcela`
+| quantidade_parcela | string | `AnticipationMovement::getQuantidadeParcela`
+| valor_liquido_transacao | float | `AnticipationMovement::getValorLiquidoTransacao`
+| status_pagamento | string | `AnticipationMovement::getStatusPagamento`
+| num_logico | string | `AnticipationMovement::getNumLogico`
+| nsu | string | `AnticipationMovement::getNsu`
+| cartao_bin | string | `AnticipationMovement::getCartaoBin`
+| cartao_holder | string | `AnticipationMovement::getCartaoHolder`
+| codigo_autorizacao | string | `AnticipationMovement::getCodigoAutorizacao`
+| codigo_cv | string | `AnticipationMovement::getCodigoCv`
+| data_prevista_pagamento | string | `AnticipationMovement::getDataPrevistaPagamento`
+| data_movimentacao | string | `AnticipationMovement::getDataMovimentacao`
+| taxa_antecipacao | float | `AnticipationMovement::getTaxaAntecipacao`
+| valor_liquido_antecipacao | float | `AnticipationMovement::getValorLiquidoAntecipacao`
