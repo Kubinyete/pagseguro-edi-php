@@ -1,7 +1,8 @@
 <?php
 
-namespace Kubinyete\Edi\PagSeguro\Model\Movement;
+namespace Kubinyete\Edi\PagSeguro\Model\Pagination;
 
+use DateTimeInterface;
 use Kubinyete\Edi\PagSeguro\Model\Model;
 use Kubinyete\Edi\PagSeguro\Model\Schema\SchemaBuilder;
 
@@ -9,10 +10,10 @@ class Pagination extends Model
 {
     protected function schema(SchemaBuilder $schema)
     {
-        $schema->int('elements');
-        $schema->int('totalPages');
-        $schema->int('page');
-        $schema->int('totalElements');
+        $schema->int("elements");
+        $schema->int("totalPages");
+        $schema->int("page");
+        $schema->int("totalElements");
     }
 
     public function getElements(): int

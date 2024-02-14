@@ -12,8 +12,12 @@ use Kubinyete\Edi\PagSeguro\Exception\HttpException;
 use Kubinyete\Edi\PagSeguro\Model\Movement\Pagination;
 use Kubinyete\Edi\PagSeguro\Model\Token\TokenResponse;
 use Kubinyete\Edi\PagSeguro\Http\Client\GuzzleHttpClient;
+use Kubinyete\Edi\PagSeguro\Model\Pagination\FinantialPage;
 use Kubinyete\Edi\PagSeguro\Model\Movement\FinantialMovement;
 use Kubinyete\Edi\PagSeguro\Model\Error\PagSeguroRequestError;
+use Kubinyete\Edi\PagSeguro\Model\Pagination\AnticipationPage;
+use Kubinyete\Edi\PagSeguro\Model\Pagination\TransactionalPage;
+use Kubinyete\Edi\PagSeguro\Model\Movement\AnticipationMovement;
 use Kubinyete\Edi\PagSeguro\Model\Movement\TransactionalMovement;
 use Kubinyete\Edi\PagSeguro\Core\Misc\TransactionalMovementPaginator;
 use Kubinyete\Edi\PagSeguro\Exception\PagSeguro\PagSeguroHttpException;
@@ -53,7 +57,7 @@ class PagSeguroEdiClient extends Client
         return TokenResponse::parse($this->get("/users/{$this->clientId}/token/{$this->token}")->getParsed());
     }
 
-    protected function getMovementsPage(DateTimeInterface $date, int $type, int $page, int $pageSize = 100): Response
+    protected function fetchMovementPage(DateTimeInterface $date, int $type, int $page, int $pageSize = 100): Response
     {
         return $this->get("/{$this->version}/movimentos", [
             'dataMovimento' => $date->format('Y-m-d'),
@@ -63,19 +67,34 @@ class PagSeguroEdiClient extends Client
         ], ['Authorization' => 'Basic ' . base64_encode("{$this->clientId}:{$this->token}")]);
     }
 
-    public function getTransactionalMovementsPage(DateTimeInterface $date, int $page, int $pageSize = 100): Response
+    public function fetchTransactionalPage(DateTimeInterface $date, int $page, int $pageSize = 100): Response
     {
-        return $this->getMovementsPage($date, self::MOVEMENT_TRANSACTIONAL, $page, $pageSize);
+        return $this->fetchMovementPage($date, self::MOVEMENT_TRANSACTIONAL, $page, $pageSize);
     }
 
-    public function getFinantialMovementsPage(DateTimeInterface $date, int $page, int $pageSize = 100): Response
+    public function getTransactionalPage(DateTimeInterface $date, int $page, int $pageSize = 100): TransactionalPage
     {
-        return $this->getMovementsPage($date, self::MOVEMENT_FINANTIAL, $page, $pageSize);
+        return TransactionalPage::parse($this->fetchTransactionalPage($date, $page, $pageSize)->getParsed());
     }
 
-    public function getAnticipationMovementsPage(DateTimeInterface $date, int $page, int $pageSize = 100): Response
+    public function fetchFinantialPage(DateTimeInterface $date, int $page, int $pageSize = 100): Response
     {
-        return $this->getMovementsPage($date, self::MOVEMENT_ANTICIPATION, $page, $pageSize);
+        return $this->fetchMovementPage($date, self::MOVEMENT_FINANTIAL, $page, $pageSize);
+    }
+
+    public function getFinantialPage(DateTimeInterface $date, int $page, int $pageSize = 100): FinantialPage
+    {
+        return FinantialPage::parse($this->fetchFinantialPage($date, $page, $pageSize)->getParsed());
+    }
+
+    public function fetchAnticipationPage(DateTimeInterface $date, int $page, int $pageSize = 100): Response
+    {
+        return $this->fetchMovementPage($date, self::MOVEMENT_ANTICIPATION, $page, $pageSize);
+    }
+
+    public function getAnticipationPage(DateTimeInterface $date, int $page, int $pageSize = 100): AnticipationPage
+    {
+        return AnticipationPage::parse($this->fetchAnticipationPage($date, $page, $pageSize)->getParsed());
     }
 
     //
@@ -90,10 +109,9 @@ class PagSeguroEdiClient extends Client
     public function getTransactionalMovements(DateTimeInterface $date, int $pageSize = 100): Paginator
     {
         return new Paginator(function (int $page, int $size, callable $limiter) use ($date) {
-            $response = $this->getTransactionalMovementsPage($date, $page, $size);
-            $pagination = Pagination::parse($response->getParsedPath('pagination'));
-            $limiter($pagination->getTotalPages());
-            return array_map(fn ($x) => TransactionalMovement::parse($x), $response->getParsedPath('detalhes'));
+            $parsed = $this->getTransactionalPage($date, $page, $size);
+            $limiter($parsed->getPagination()->getTotalPages());
+            return $parsed->getDetails();
         }, 1, $pageSize);
     }
 
@@ -107,10 +125,25 @@ class PagSeguroEdiClient extends Client
     public function getFinantialMovements(DateTimeInterface $date, int $pageSize = 100): Paginator
     {
         return new Paginator(function (int $page, int $size, callable $limiter) use ($date) {
-            $response = $this->getFinantialMovementsPage($date, $page, $size);
-            $pagination = Pagination::parse($response->getParsedPath('pagination'));
-            $limiter($pagination->getTotalPages());
-            return array_map(fn ($x) => FinantialMovement::parse($x), $response->getParsedPath('detalhes'));
+            $parsed = $this->getFinantialPage($date, $page, $size);
+            $limiter($parsed->getPagination()->getTotalPages());
+            return $parsed->getDetails();
+        }, 1, $pageSize);
+    }
+
+    /**
+     * Returns a Paginator object for sequential reading over every anticipation movement specified
+     *
+     * @param DateTimeInterface $date
+     * @param integer $pageSize
+     * @return Paginator<AnticipationMovement>
+     */
+    public function getAnticipationMovements(DateTimeInterface $date, int $pageSize = 100): Paginator
+    {
+        return new Paginator(function (int $page, int $size, callable $limiter) use ($date) {
+            $parsed = $this->getAnticipationPage($date, $page, $size);
+            $limiter($parsed->getPagination()->getTotalPages());
+            return $parsed->getDetails();
         }, 1, $pageSize);
     }
 }
