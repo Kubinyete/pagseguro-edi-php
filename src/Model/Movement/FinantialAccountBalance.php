@@ -10,18 +10,18 @@ class FinantialAccountBalance extends Model
 {
     protected function schema(SchemaBuilder $schema)
     {
-        $schema->string("estabelecimento"); //: "136625414",
-        $schema->string("tipo_evento"); //: "7",
+        $schema->int("estabelecimento"); //: "136625414",
+        $schema->int("tipo_evento"); //: "7",
         $schema->string("data_movimentacao"); //: "2023-11-15",
-        $schema->string("valor_saldo"); //: "0.00",
+        $schema->float("valor_saldo"); //: "0.00",
     }
 
-    public function getEstabelecimento(): string
+    public function getEstabelecimento(): int
     {
         return $this->get("estabelecimento");
     }
 
-    public function getTipoEvento(): string
+    public function getTipoEvento(): int
     {
         return $this->get("tipo_evento");
     }
@@ -31,7 +31,7 @@ class FinantialAccountBalance extends Model
         return $this->get("data_movimentacao");
     }
 
-    public function getValorSaldo(): string
+    public function getValorSaldo(): float
     {
         return $this->get("valor_saldo");
     }
