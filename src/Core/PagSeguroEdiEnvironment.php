@@ -6,6 +6,6 @@ class PagSeguroEdiEnvironment extends Environment
 {
     public static function production(): static
     {
-        return new static('https://edi.api.pagseguro.com.br/edi/v1');
+        return new static('https://edi.api.pagbank.com.br/edi/v1');
     }
 }
