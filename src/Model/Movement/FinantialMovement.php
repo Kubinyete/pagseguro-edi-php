@@ -2,7 +2,6 @@
 
 namespace Kubinyete\Edi\PagSeguro\Model\Movement;
 
-use DateTimeInterface;
 use Kubinyete\Edi\PagSeguro\Model\Model;
 use Kubinyete\Edi\PagSeguro\Model\Schema\SchemaBuilder;
 
@@ -18,7 +17,7 @@ class FinantialMovement extends Model
         $schema->string("data_venda_ajuste"); //: "2023-11-14",
         $schema->string("hora_venda_ajuste"); //: "05:51:55",
         $schema->string("tipo_evento"); //: "1",
-        $schema->string("tipo_transacao"); //: "1",
+        $schema->string("tipo_transacao")->nullable(); //: "1",
         $schema->string("codigo_transacao"); //: "30E5AE0A6B01455A8262040359F88E89",
         $schema->string("codigo_venda"); //: "7326655",
         $schema->float("valor_total_transacao"); //: 663.66,
@@ -99,7 +98,7 @@ class FinantialMovement extends Model
         return $this->get('tipo_evento');
     }
 
-    public function getTipoTransacao(): string
+    public function getTipoTransacao(): ?string
     {
         return $this->get('tipo_transacao');
     }
